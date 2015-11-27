@@ -1,9 +1,5 @@
 var myItems = [];
 app.controller("mainController", function($scope, $mdDialog){
-	console.log("Controller activated");
-	$scope.message="This is the message variable in the controller";
-	$scope.data  = "This is the data!";
-	$scope.alphabet = "";
 	$scope.readonly=false;
 	$scope.Q1 = [];
 	$scope.E1 = [];
@@ -15,7 +11,6 @@ app.controller("mainController", function($scope, $mdDialog){
 	$scope.F2 = [];
 	$scope.transformation="";
 	myItems = $scope.myItems;
-	$scope.data = ""
 	$scope.subsetWarning = ""; //warning to say that start state must be subset
 	$scope.transformedStateSet = "" ;
 	$scope.transformedAlphabet = "";
@@ -24,8 +19,8 @@ app.controller("mainController", function($scope, $mdDialog){
 	$scope.transformedAcceptStates = "";
 
 	Intro = $mdDialog.alert()
-        .title("Welcome to the DFA/NFA transformation application")
-        .content("Please enter the formal description of the DFA's that you want to transform. If you are doing a Kleen* transformation, please fill in the description of L1.")
+        .title("Welcome to the NFA transformation application")
+        .content("Please enter the formal description of the NFA's that you want to transform. If you are doing a Kleen* transformation, please fill in the description of L1.")
         .ok('Close');
 
     $mdDialog
@@ -44,7 +39,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		if ($scope.validate() == false){
 
 		invalidAlert = $mdDialog.alert()
-        .title("Invalid DFA's")
+        .title("Invalid NFA's")
         .content("Please ensure that accept states are a subset of the state set.")
         .ok('Close');
 
@@ -109,7 +104,7 @@ app.controller("mainController", function($scope, $mdDialog){
 			$scope.transformedDescription += ("F: " + F + "<br>");
 			$scope.transformedAcceptStates = "F: {" + F + "}";
 
-			//start state = new start state that points to the start states of the former DFA's
+			//start state = new start state that points to the start states of the former NFA's
 			console.log("q0: " + newStart);
 			$scope.transformedStartState = "q0: " + newStart;
 			$scope.transformedDescription = ("q0: " + newStart + "<br>");
@@ -118,8 +113,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		//CONCANTENATION
 		else if ($scope.transformation=="Concatenation"){
 			console.log("CONCANTENATION L1 . L2");
-			//Q = Q0 U Q2
-			//Q.push($scope.Q1, $scope.Q2);
+
 			Q = Q.concat($scope.Q1, $scope.Q2);
 			console.log("Q: " + Q);
 			Q = $scope.removeDuplicates(Q);
@@ -140,13 +134,6 @@ app.controller("mainController", function($scope, $mdDialog){
 				$scope.transformedDelta += " U " + $scope.F1[i] + "->" + $scope.q02;
 			};
 
-			
-			//Point all accept states in F1 to q02
-			// console.log("alpha: " + "alpha2 U alpha2"); 
-			// for (var i = 0; i<$scope.F1.length; i++) {
-			// 	console.log(" U " + $scope.F1[i] + "->" + $scope.q02);
-			// };
-		
 
 			//F = F2
 			console.log("F: " + $scope.F2)
@@ -168,8 +155,6 @@ app.controller("mainController", function($scope, $mdDialog){
 			else{
 				newStart="qStart";
 			}
-
-			//L1*
 
 			//Q = Q1
 			console.log("Q1: " + newStart + " U " + $scope.Q1);
@@ -194,8 +179,6 @@ app.controller("mainController", function($scope, $mdDialog){
 			//q01 = q01
 			console.log("q01: " + $scope.q01);
 			$scope.transformedStartState = "q01: " + newStart;
-
-			//L2*
 
 			//Q = Q1
 			console.log("Q2: " + newStart + " U " + $scope.Q2);
@@ -250,6 +233,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		console.log("F1 is " + $scope.F1);
 		console.log("Q1 is " + $scope.Q1);
 		var FsubsetCheck = true;
+
 		//check that accept states are subset of state set
 		for (var i = 0;i<$scope.F1.length; i++){
 			if ($scope.Q1.indexOf($scope.F1[i])==-1){
@@ -260,7 +244,6 @@ app.controller("mainController", function($scope, $mdDialog){
 			}
 		}
 
-		//chek 
 		
 		if (FsubsetCheck == true){
 			console.log("F1 is a subset of Q1");
@@ -311,9 +294,6 @@ app.controller("mainController", function($scope, $mdDialog){
 			}
 			
 		}
-		
-		
-		console.log("model changed");
 		
 	}
 });
