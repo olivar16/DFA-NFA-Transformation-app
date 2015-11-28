@@ -19,7 +19,7 @@ app.controller("mainController", function($scope, $mdDialog){
 	$scope.transformedAcceptStates = "";
 
 	Intro = $mdDialog.alert()
-        .title("Welcome to the NFA transformation application")
+        .title("Welcome to Paul's NFA transformation app")
         .content("Please enter the formal description of the NFA's that you want to transform. If you are doing a Kleen* transformation, please fill in the description of L1.")
         .ok('Close');
 
