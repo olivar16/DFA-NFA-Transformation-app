@@ -1,5 +1,5 @@
 # NFA-Transformation-app
-Software implementation project for Theory of Computation Fall 2015. Takes formal descriptions of two NFA's and generates formal descriptions of their Union/Concatenation as well as a Kleen* transformation of the first NFA. 
+Takes formal descriptions of two NFA's and generates formal descriptions of their Union/Concatenation as well as a Kleen* transformation of the first NFA. 
 
 How-to: <br>
 1. On your web browser, go to the following URL: http://olivar16transformer.herokuapp.com . Alternatively, you may download the source files and open home.html <br>
