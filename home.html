@@ -43,7 +43,7 @@
 						<h3>q01: </h3>
 					<md-input-container>
   						<label>q01</label>
-  						<input type="text" ng-model="q01" ng-change="subsetCheck('startState',Q1,q01)">
+  						<input type="text" ng-model="q01" ng-change="subsetCheck('L1')">
 					</md-input-container>
 					<h5>{{subsetWarning}}</h5>
 					</div>
@@ -78,7 +78,7 @@
 						<h3>q02: </h3>
 					<md-input-container>
   						<label>q02</label>
-  						<input type="text" ng-model="q02" ng-change="subsetCheck('startState',Q2,q02)">
+  						<input type="text" ng-model="q02" ng-change="subsetCheck('L2')">
 					</md-input-container>
 					<h5>{{subsetWarning}}</h5>
 					</div>
@@ -96,8 +96,7 @@
 					<md-radio-button value="Concatenation"> Concatenation </md-radio-button>
 					<md-radio-button value="Kleene*">Kleene*</md-radio-button>
 					</md-radio-group>
-					<md-button class="button" onClick="var audio = new Audio('r2d2.mp3');
-		audio.play();" ng-click="transform()">Transform </md-button>
+					<md-button class="button" ng-click="transform()">Transform </md-button>
 
 					<div layout = "column">
 						<h3> {{transformedStateSet}} </h3>

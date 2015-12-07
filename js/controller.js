@@ -15,6 +15,8 @@ app.controller("mainController", function($scope, $mdDialog){
 	$scope.transformedDelta = "";
 	$scope.transformedStartState = "";
 	$scope.transformedAcceptStates = "";
+	var acceptAudio = new Audio('r2d2.mp3');
+	var rejectAudio = new Audio('error.mp3');
 
 	Intro = $mdDialog.alert()
         .title("Welcome to Paul's NFA transformation app")
@@ -35,7 +37,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		var E=[];
 
 		if ($scope.validate() == false && $scope.transformation!="Kleene*"){
-
+		rejectAudio.play();
 		invalidAlert = $mdDialog.alert()
         .title("Invalid NFA's")
         .content("Please ensure that accept states are a subset of the state set.")
@@ -48,6 +50,7 @@ app.controller("mainController", function($scope, $mdDialog){
           });
 		}
 		else if ($scope.transformation == ""){
+		rejectAudio.play();
 		noTransformationAlert = $mdDialog.alert()
         .title("No transformation selected")
         .content("Please select a transformation.")
@@ -61,7 +64,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		}
 		//UNION
 		else if ($scope.transformation=="Union"){
-
+			acceptAudio.play();
 			//Create new start state that does epsilon transitions into start states of both DFA's
 			var newStart = "";
 			if ($scope.Q1.indexOf("q0")==-1 && ($scope.Q2.indexOf("q0")==-1)){
@@ -99,7 +102,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		}
 		//CONCANTENATION
 		else if ($scope.transformation=="Concatenation"){
-
+			acceptAudio.play();
 			//Q = Q1 U Q2
 			Q = Q.concat($scope.Q1, $scope.Q2);
 			Q = $scope.removeDuplicates(Q);
@@ -127,7 +130,7 @@ app.controller("mainController", function($scope, $mdDialog){
 
 		}
 		else if ($scope.transformation=="Kleene*"){
-			
+			acceptAudio.play();
 			//Create new start state that does epsilon transitions into start states of both DFA's
 			var newStart = "";
 			if ($scope.Q1.indexOf("q0")==-1 && ($scope.Q2.indexOf("q0")==-1)){
@@ -177,6 +180,18 @@ app.controller("mainController", function($scope, $mdDialog){
 		
 	}
 	
+
+	$scope.subsetCheck = function(set){
+
+		if ((set == 'L1' && ($scope.Q1.indexOf($scope.q01)==-1)) | (set == 'L2' && ($scope.Q2.indexOf($scope.q02))==-1)){
+			$scope.subsetWarning = "Start state must be in state set.";
+		}
+		else{
+			$scope.subsetWarning = "";
+		}
+
+	}
+
 	$scope.validate = function(){
 		
 		//Check if state sets are empty
