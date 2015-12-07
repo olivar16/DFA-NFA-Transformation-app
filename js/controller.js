@@ -35,21 +35,9 @@ app.controller("mainController", function($scope, $mdDialog){
 		var Q=[];
 		var F=[];
 		var E=[];
+		var valid = false;
 
-		if ($scope.validate() == false && $scope.transformation!="Kleene*"){
-		rejectAudio.play();
-		invalidAlert = $mdDialog.alert()
-        .title("Invalid NFA's")
-        .content("Please ensure that accept states are a subset of the state set.")
-        .ok('Close');
-
-   		$mdDialog
-          .show( invalidAlert )
-          .finally(function() {
-            alert = undefined;
-          });
-		}
-		else if ($scope.transformation == ""){
+		if ($scope.transformation == ""){
 		rejectAudio.play();
 		noTransformationAlert = $mdDialog.alert()
         .title("No transformation selected")
@@ -58,6 +46,28 @@ app.controller("mainController", function($scope, $mdDialog){
 
    		$mdDialog
           .show( noTransformationAlert )
+          .finally(function() {
+            alert = undefined;
+          });
+          return;
+		}
+
+		if ($scope.transformation=="Kleene*"){
+			valid = $scope.validate(true);
+		}
+		else{
+			valid = $scope.validate();
+		}
+
+		if (valid == false){
+		rejectAudio.play();
+		invalidAlert = $mdDialog.alert()
+        .title("Invalid NFA's")
+        .content("Please ensure that accept states are a subset of the state set.")
+        .ok('Close');
+
+   		$mdDialog
+          .show( invalidAlert )
           .finally(function() {
             alert = undefined;
           });
@@ -192,10 +202,30 @@ app.controller("mainController", function($scope, $mdDialog){
 
 	}
 
-	$scope.validate = function(){
+	$scope.validate = function(isKleen){
 		
+		if (isKleen==true)
+		{
+			
+			//Check if state sets are empty
+			if ($scope.Q1.length==0 || $scope.F1.length==0){
+			return false;
+			}
+
+			//Check if accept states are subset of state set
+			for (var i = 0;i<$scope.F1.length; i++){
+			if ($scope.Q1.indexOf($scope.F1[i])==-1){
+				return false;
+				break;
+			}
+		}
+
+
+
+		}
+		else{
 		//Check if state sets are empty
-		if ($scope.Q1.length==0 || $scope.Q2.length==0){
+		if ($scope.Q1.length==0 || $scope.F1.length==0 || $scope.Q2.length==0 || $scope.F2.length==0){
 			return false;
 		}
 
@@ -222,7 +252,7 @@ app.controller("mainController", function($scope, $mdDialog){
 		if ($scope.Q1.indexOf($scope.q01) == -1 || $scope.Q2.indexOf($scope.q02) == -1){
 			return false;
 		}
-
+}
 		return true;
 	}
 	
