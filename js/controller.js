@@ -15,8 +15,8 @@ app.controller("mainController", function($scope, $mdDialog){
 	$scope.transformedDelta = "";
 	$scope.transformedStartState = "";
 	$scope.transformedAcceptStates = "";
-	var acceptAudio = new Audio('r2d2.mp3');
-	var rejectAudio = new Audio('error.mp3');
+	var acceptAudio = new Audio('mp3/r2d2.mp3');
+	var rejectAudio = new Audio('mp3/error.mp3');
 
 	Intro = $mdDialog.alert()
         .title("Welcome to Paul's NFA transformation app")
